@@ -1,8 +1,8 @@
 # Navigation
 
-点击此处 [DEMO](https://i.booop.net) 查看
+✨ Navigation 开源导航，前端使用 Vue.js / Vite 进行构建，服务端使用 Nest.js 进行构建。
 
-Navigation 开源练手导航，前端使用 Vue.js / Vite 进行构建，服务端使用 Nest.js 进行构建。
+服务端代码请移步至此 [Navigation Server](https://github.com/Edward-Brock/navigation-server)。
 
 ## 使用技术
 
@@ -13,10 +13,6 @@ Navigation 开源练手导航，前端使用 Vue.js / Vite 进行构建，服务
 - [Node Sass](https://github.com/sass/node-sass)
 - [Element Plus](https://element-plus.org/zh-CN/)
 - [Tailwind CSS](https://tailwindcss.com/)
-
-### 服务端
-
-- [Nest.js](https://nestjs.com/)
 
 ## 项目安装及运行
 
