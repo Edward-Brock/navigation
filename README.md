@@ -10,6 +10,7 @@ Navigation 开源练手导航，前端使用 Vue.js / Vite 进行构建，服务
 
 - [Vue.js](https://cn.vuejs.org/)
 - [Vite](https://cn.vitejs.dev/)
+- [Node Sass](https://github.com/sass/node-sass)
 - [Element Plus](https://element-plus.org/zh-CN/)
 - [Tailwind CSS](https://tailwindcss.com/)
 
