@@ -9,6 +9,8 @@
 ### 前端
 
 - [Vue.js](https://cn.vuejs.org/)
+- [Vue Router](https://router.vuejs.org/zh/https://router.vuejs.org/)
+- [Axios](https://axios-http.com/)
 - [Vite](https://cn.vitejs.dev/)
 - [Node Sass](https://github.com/sass/node-sass)
 - [Element Plus](https://element-plus.org/zh-CN/)
@@ -32,4 +34,4 @@ npm run dev
 
 ## LICENSE
 
-[GNU General Public License v3.0](https://github.com/Edward-Brock/booop-navigation/blob/main/LICENSE)
+[GNU General Public License v3.0](https://github.com/Edward-Brock/navigation/blob/main/LICENSE)

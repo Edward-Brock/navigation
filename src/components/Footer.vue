@@ -8,7 +8,7 @@ const version = config.version
 
 <template>
   <Disclosure>
-    <div class="bg-zinc-50 mx-auto max-w-full px-4 sm:px-4 lg:px-8 border-solid border-t-2 border-zinc-100">
+    <div class="bg-zinc-50 mx-auto max-w-full px-4 sm:px-9 lg:px-8 border-solid border-t-2 border-zinc-100">
       <div class="relative flex items-center justify-between py-8">
         <div class="flex flex-1 items-center sm:items-stretch sm:justify-start">
           <div class="flex flex-col flex-shrink-0">

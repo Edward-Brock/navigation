@@ -13,5 +13,7 @@ declare module 'vue' {
     ElMain: typeof import('element-plus/es')['ElMain']
     Footer: typeof import('./src/components/Footer.vue')['default']
     Header: typeof import('./src/components/Header.vue')['default']
+    RouterLink: typeof import('vue-router')['RouterLink']
+    RouterView: typeof import('vue-router')['RouterView']
   }
 }
