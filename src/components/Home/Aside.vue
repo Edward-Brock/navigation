@@ -9,7 +9,7 @@ onMounted(() => {
    * 从 Content.vue 页面中接收分类与网站信息
    */
   eventBus.on('allDataInfo', (response) => {
-    console.log('allDataInfo ->', response)
+    // console.log('allDataInfo ->', response)
     categoryInfo.value = response
   })
 })

@@ -1,9 +1,20 @@
 <script setup lang="ts">
-import { getAllData } from '@/apis/Home'
+import { findOne, getAllData } from '@/apis/Home'
 import { onMounted, Ref, ref, UnwrapRef } from 'vue'
 import eventBus from '@/utils/eventBus.ts'
 
 let categoryInfo: Ref<UnwrapRef<any[]>> = ref([])
+
+/**
+ * 点击跳转网站
+ */
+function refreshTo(data: any) {
+  // console.log(data);
+  window.open(data.url);
+
+  // 统计跳转网站访问次数
+  findOne(data.id)
+}
 
 /**
  * 获取当前所有分类和各自所属的网站信息
@@ -32,7 +43,8 @@ onMounted(() => {
       <div class="grid grid-cols-2 gap-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-6">
         <template v-for="site in categoryGroup['sites']">
           <div
-              class="group p-3 border-2 border-transparent hover:border-gray-100 rounded-md bg-transparent hover:bg-gray-50 no-underline cursor-pointer">
+              class="group p-3 border-2 border-transparent hover:border-gray-100 rounded-md bg-transparent hover:bg-gray-50 no-underline cursor-pointer"
+              @click="refreshTo(site)">
             <div
                 class="font-bold text-gray-400 mb-1 group-hover:underline decoration-wavy decoration-gray-950 group-hover:text-gray-950">
               {{ site['name'] }}
