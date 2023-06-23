@@ -1,8 +1,9 @@
 <script setup lang="ts">
 import { getAllData } from '@/apis/Home'
-import { onMounted, ref } from 'vue'
+import { onMounted, Ref, ref, UnwrapRef } from 'vue'
+import eventBus from '@/utils/eventBus.ts'
 
-let categoryInfo = ref([])
+let categoryInfo: Ref<UnwrapRef<any[]>> = ref([])
 
 /**
  * 获取当前所有分类和各自所属的网站信息
@@ -10,7 +11,8 @@ let categoryInfo = ref([])
 const onAllData = async () => {
   await getAllData().then((response: any) => {
     categoryInfo.value = response
-    console.log('onAllData ->', categoryInfo.value)
+    // console.log('onAllData ->', categoryInfo.value)
+    eventBus.emit('allDataInfo', categoryInfo.value)
   })
 }
 
@@ -20,43 +22,45 @@ onMounted(() => {
 </script>
 
 <template>
-  <div class="bg-zinc-50mx-auto max-w-full px-4 sm:px-9 lg:px-8 my-8 select-none">
-    <div v-for="category in categoryInfo">
+  <div class="w-full px-4 sm:px-9 lg:px-8 select-none">
+    <template v-for="(categoryGroup, index) in categoryInfo">
+      <!-- 一级目录 -->
       <div class="my-6">
-        <div class="text-xl font-black mb-1">{{ category.name }}</div>
-        <div class="text-sm text-gray-300">{{ category.description }}</div>
+        <div :id="'tag' + index" class="text-xl font-black mb-1">{{ categoryGroup['name'] }}</div>
+        <div class="text-sm text-gray-300">{{ categoryGroup['description'] }}</div>
       </div>
-      <div class="grid grid-cols-2 gap-2 sm:grid-cols-2 md:grid-cols-4 lg:grid-cols-6">
-        <div v-for="siteInfo in category?.sites">
+      <div class="grid grid-cols-2 gap-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-6">
+        <template v-for="site in categoryGroup['sites']">
           <div
               class="group p-3 border-2 border-transparent hover:border-gray-100 rounded-md bg-transparent hover:bg-gray-50 no-underline cursor-pointer">
             <div
-                class="font-bold text-gray-400 group-hover:underline decoration-wavy decoration-gray-500 group-hover:text-gray-950">
-              {{ siteInfo.name }}
+                class="font-bold text-gray-400 mb-1 group-hover:underline decoration-wavy decoration-gray-950 group-hover:text-gray-950">
+              {{ site['name'] }}
             </div>
-            <div class="text-sm text-gray-400">{{ siteInfo.description }}</div>
+            <div class="text-sm text-gray-400 truncate" :title="site['description']">{{ site['description'] }}</div>
           </div>
-        </div>
+        </template>
       </div>
-      <div v-for="category in category?.second_category">
+      <!-- 二级目录 -->
+      <div v-for="(category, index) in categoryGroup['second_category']">
         <div class="my-6 ml-3">
-          <div class="text-xl mb-1">{{ category.name }}</div>
-          <div class="text-sm text-gray-300">{{ category.description }}</div>
+          <div :id="'tag_second' + index" class="text-xl mb-1">{{ category['name'] }}</div>
+          <div class="text-sm text-gray-300">{{ category['description'] }}</div>
         </div>
-        <div class="grid grid-cols-2 gap-2 sm:grid-cols-2 md:grid-cols-4 lg:grid-cols-6">
+        <div class="grid grid-cols-2 gap-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-6">
           <div v-for="site in category?.sites">
             <div
                 class="group p-3 border-2 border-transparent hover:border-gray-100 rounded-md bg-transparent hover:bg-gray-50 no-underline cursor-pointer">
               <div
-                  class="font-bold text-gray-500 group-hover:underline decoration-wavy decoration-gray-500 group-hover:text-gray-950">
-                {{ site.name }}
+                  class="font-bold text-gray-400 mb-1 group-hover:underline decoration-wavy decoration-gray-950 group-hover:text-gray-950">
+                {{ site['name'] }}
               </div>
-              <div class="text-sm text-gray-400">{{ site.description }}</div>
+              <div class="text-sm text-gray-400 truncate" :title="site['description']">{{ site['description'] }}</div>
             </div>
           </div>
         </div>
       </div>
-    </div>
+    </template>
   </div>
 </template>
 

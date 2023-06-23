@@ -12,6 +12,7 @@
 - [Vue Router](https://router.vuejs.org/zh/https://router.vuejs.org/)
 - [Axios](https://axios-http.com/)
 - [Vite](https://cn.vitejs.dev/)
+- [Mitt](https://github.com/developit/mitt)
 - [Node Sass](https://github.com/sass/node-sass)
 - [Element Plus](https://element-plus.org/zh-CN/)
 - [Tailwind CSS](https://tailwindcss.com/)

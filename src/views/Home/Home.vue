@@ -3,6 +3,8 @@ import { ref } from 'vue'
 import Header from '@/components/Home/Header.vue'
 import Footer from '@/components/Home/Footer.vue'
 import Content from '@/components/Home/Content.vue'
+import Aside from '@/components/Home/Aside.vue'
+import 'element-plus/theme-chalk/display.css'
 
 // 顶部高度
 const headerHeight = ref(48)
@@ -13,11 +15,14 @@ const footerHeight = ref(100)
 <template>
   <div class="common-layout">
     <el-container>
-      <el-header :height="headerHeight + 'px'">
+      <el-header :height="headerHeight + 'px'" class="bg-white sticky top-0 z-50">
         <Header/>
       </el-header>
-      <el-main>
-        <Content/>
+      <el-main class="my-8">
+        <template class="flex flex-row">
+          <Aside class="hidden-xs-only"/>
+          <Content/>
+        </template>
       </el-main>
       <el-footer :height="footerHeight + '%'">
         <Footer/>
@@ -36,7 +41,12 @@ body,
 }
 
 .el-main {
-  padding: 20px 0;
+  padding: 0;
+  overflow: visible;
+}
+
+.aside {
+  overflow: visible;
 }
 
 .el-footer {

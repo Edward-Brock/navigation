@@ -1,6 +1,7 @@
 import axios, { AxiosError, AxiosInstance, AxiosRequestConfig, AxiosResponse } from 'axios'
 import router from '@/router'
 import { ElMessage } from 'element-plus'
+import 'element-plus/theme-chalk/src/message.scss'
 
 const BaseURL = import.meta.env.VITE_APP_BASE_URL;
 
