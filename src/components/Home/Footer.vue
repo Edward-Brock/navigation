@@ -4,6 +4,8 @@ import config from '../../../package.json'
 
 // 获取 package.json 当前版本号
 const version = config.version
+// 获取当前版权信息
+const copyright = import.meta.env.VITE_APP_COPYRIGHT
 </script>
 
 <template>
@@ -13,8 +15,8 @@ const version = config.version
         <div class="flex flex-1 items-center sm:items-stretch sm:justify-start">
           <div class="flex flex-col flex-shrink-0">
             <div class="font-mono text-xs text-gray-300">
-              <p>{{ 'VERSION: ' + version }}</p>
-              <p>Copyright © 2023 booop All rights reserved.</p>
+              <div>{{ 'VERSION: ' + version }}</div>
+              <div>{{ copyright }}</div>
             </div>
           </div>
         </div>
