@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { Disclosure } from '@headlessui/vue'
-import config from '../../package.json'
+import config from '../../../package.json'
 
 // 获取 package.json 当前版本号
 const version = config.version

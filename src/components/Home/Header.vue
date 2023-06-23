@@ -15,7 +15,7 @@ function toGitHub(): void {
       <div class="relative flex h-12 items-center justify-between">
         <div class="flex flex-1 items-center justify-center sm:items-stretch sm:justify-between">
           <div class="flex flex-shrink-0 items-center">
-            <img class="h-8 w-auto lg:block" src="../assets/logo_396_118_black.png"
+            <img class="h-8 w-auto lg:block" src="../../assets/logo_396_118_black.png"
                  alt="booop navigation logo black"/>
           </div>
           <!-- GitHub 项目跳转-->

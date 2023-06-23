@@ -2,7 +2,7 @@ import axios, { AxiosError, AxiosInstance, AxiosRequestConfig, AxiosResponse } f
 import router from '@/router'
 import { ElMessage } from 'element-plus'
 
-const BaseURL = import.meta.env.VITE_APP_SERVER_URL;
+const BaseURL = import.meta.env.VITE_APP_BASE_URL;
 
 // 数据返回的接口
 // 定义请求响应参数，不含 data
