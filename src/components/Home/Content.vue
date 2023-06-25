@@ -12,8 +12,11 @@ function refreshTo(data: any) {
   // console.log(data);
   window.open(data.url);
 
-  // 统计跳转网站访问次数
+  /**
+   * 统计跳转网站访问次数并将该网站浏览数本地加一，优化显示体验
+   */
   findOne(data.id)
+  data.visit_num += 1
 }
 
 /**
@@ -30,6 +33,7 @@ const onAllData = async () => {
 onMounted(() => {
   onAllData()
 })
+
 </script>
 
 <template>
@@ -50,6 +54,7 @@ onMounted(() => {
               {{ site['name'] }}
             </div>
             <div class="text-sm text-gray-400 truncate" :title="site['description']">{{ site['description'] }}</div>
+            <div class="text-xs font-light text-gray-200 mt-2">{{ site['visit_num'] + ' 次访问' }}</div>
           </div>
         </template>
       </div>
@@ -68,6 +73,7 @@ onMounted(() => {
                 {{ site['name'] }}
               </div>
               <div class="text-sm text-gray-400 truncate" :title="site['description']">{{ site['description'] }}</div>
+              <div class="text-xs font-light text-gray-200 mt-2">{{ site['visit_num'] + ' 次访问' }}</div>
             </div>
           </div>
         </div>
