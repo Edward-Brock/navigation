@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { Disclosure } from '@headlessui/vue'
 import config from '../../../package.json'
+import Statistic from '@/components/Home/Statistic.vue'
 
 // 获取 package.json 当前版本号
 const version = config.version
@@ -13,8 +14,11 @@ const copyright = import.meta.env.VITE_APP_COPYRIGHT
     <div class="bg-zinc-50 mx-auto max-w-full px-4 sm:px-9 lg:px-8 border-solid border-t-2 border-zinc-100">
       <div class="relative flex items-center justify-between py-8">
         <div class="flex flex-1 items-center sm:items-stretch sm:justify-start">
-          <div class="flex flex-col flex-shrink-0">
-            <div class="font-mono text-xs text-gray-300">
+          <div class="flex flex-col font-mono">
+            <div class="mb-4">
+              <Statistic/>
+            </div>
+            <div class="text-xs text-gray-300">
               <div>{{ 'VERSION: ' + version }}</div>
               <div>{{ copyright }}</div>
             </div>
