@@ -51,7 +51,10 @@ class RequestHttp {
      * 客户端发送请求 -> [请求拦截器] -> 服务器
      * token 校验(JWT) : 接受服务器返回的 token,存储到 Vuex / Pinia / 本地储存当中
      */
-    this.service.interceptors.request.use()
+    this.service.interceptors.request.use((config) => {
+      // config: 配置对象,对象里面有一个属性很重要，headers 请求头
+      return config;
+    })
 
     /**
      * 响应拦截器
@@ -80,7 +83,7 @@ class RequestHttp {
             this.handleCode(response.status)
           }
           if (!window.navigator.onLine) {
-            ElMessage.error('网络连接失败');
+            ElMessage.error('请检查网络是否连接');
             // 可以跳转到错误页面，也可以不做操作
             return router.replace({
               path: '/404',

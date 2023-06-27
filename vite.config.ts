@@ -30,6 +30,7 @@ export default ({mode}) => defineConfig({
       '/api': {
         target: loadEnv(mode, process.cwd()).VITE_APP_SERVER_URL, // 你要跨域访问的网址
         changeOrigin: true,   // 允许跨域
+        ws: true,
         rewrite: (path) => path.replace(/^\/api/, ''), // 重写路径把路径变成空字符
       },
     },

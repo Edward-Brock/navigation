@@ -22,10 +22,10 @@ function refreshTo(data: any) {
 /**
  * 获取当前所有分类和各自所属的网站信息
  */
-const onAllData = async () => {
-  await getAllData().then((response: any) => {
+const onAllData = () => {
+  getAllData().then((response: any) => {
+    // console.log(response)
     categoryInfo.value = response
-    // console.log('onAllData ->', categoryInfo.value)
     eventBus.emit('allDataInfo', categoryInfo.value)
   })
 }
