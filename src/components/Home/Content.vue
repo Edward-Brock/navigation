@@ -67,7 +67,8 @@ onMounted(() => {
         <div class="grid grid-cols-2 gap-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-6">
           <div v-for="site in category?.sites">
             <div
-                class="group p-3 border-2 border-transparent hover:border-gray-100 rounded-md bg-transparent hover:bg-gray-50 no-underline cursor-pointer">
+                class="group p-3 border-2 border-transparent hover:border-gray-100 rounded-md bg-transparent hover:bg-gray-50 no-underline cursor-pointer"
+                @click="refreshTo(site)">
               <div
                   class="font-bold text-gray-400 mb-1 group-hover:underline decoration-wavy decoration-gray-950 group-hover:text-gray-950">
                 {{ site['name'] }}
