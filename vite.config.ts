@@ -27,11 +27,18 @@ export default ({mode}) => defineConfig({
     host: '0.0.0.0',
     // 反向代理配置，注意 rewrite 写法，开始没看文档在这里踩了坑
     proxy: {
-      '/api': {
+      '/dev-api': {
         target: loadEnv(mode, process.cwd()).VITE_APP_SERVER_URL, // 你要跨域访问的网址
         changeOrigin: true,   // 允许跨域
         ws: true,
-        rewrite: (path) => path.replace(/^\/api/, ''), // 重写路径把路径变成空字符
+        rewrite: (path) => path.replace(/^\/dev-api/, ''), // 重写路径把路径变成空字符
+      },
+      '/prod-api': {
+        target: loadEnv(mode, process.cwd()).VITE_APP_SERVER_URL, // 你要跨域访问的网址
+        changeOrigin: true,   // 允许跨域
+        ws: true,
+        secure: true,
+        rewrite: (path) => path.replace(/^\/prod-api/, ''), // 重写路径把路径变成空字符
       },
     },
   },

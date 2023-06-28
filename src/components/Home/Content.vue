@@ -1,7 +1,7 @@
 <script setup lang="ts">
-import { findOne, getAllData } from '@/apis/Home'
+import { getAllData, findOne } from '@/apis/home'
 import { onMounted, Ref, ref, UnwrapRef } from 'vue'
-import eventBus from '@/utils/eventBus.ts'
+import eventBus from '@/utils/eventBus'
 
 let categoryInfo: Ref<UnwrapRef<any[]>> = ref([])
 
