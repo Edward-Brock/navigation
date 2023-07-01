@@ -4,6 +4,7 @@ import { onMounted, Ref, ref, UnwrapRef } from 'vue'
 import eventBus from '@/utils/eventBus'
 
 let categoryInfo: Ref<UnwrapRef<any[]>> = ref([])
+let defaultLogoUrl = import.meta.env.VITE_APP_LOGO_DEFAULT_URL
 
 /**
  * 点击跳转网站
@@ -47,14 +48,22 @@ onMounted(() => {
       <div class="grid grid-cols-2 gap-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-6">
         <template v-for="site in categoryGroup['sites']">
           <div
-              class="group p-3 border-2 border-transparent hover:border-gray-100 rounded-md bg-transparent hover:bg-gray-50 no-underline cursor-pointer"
+              class="group relative p-3 border-2 border-transparent hover:border-gray-100 rounded-md bg-transparent hover:bg-gray-50 no-underline cursor-pointer"
               @click="refreshTo(site)">
+            <!-- 网站 Logo -->
             <div
-                class="font-bold text-gray-400 mb-1 group-hover:underline decoration-wavy decoration-gray-950 group-hover:text-gray-950">
+                class="absolute top-1 right-2 w-9 h-9 flex justify-center items-center rounded-full overflow-hidden opacity-0 group-hover:opacity-100">
+              <img :src="site.logo ? site.logo : defaultLogoUrl" :alt="site.name">
+            </div>
+            <!-- 网站名称 -->
+            <div
+                class="font-bold text-gray-400 mb-2 w-3/4 group-hover:underline decoration-wavy decoration-gray-950 group-hover:text-gray-950">
               {{ site['name'] }}
             </div>
+            <!-- 网站描述 -->
             <div class="text-sm text-gray-400 truncate" :title="site['description']">{{ site['description'] }}</div>
-            <div class="text-xs font-light text-gray-200 mt-2">{{ site['visit_num'] + ' 次访问' }}</div>
+            <!-- 网站访问数 -->
+            <div class="text-xs font-light text-gray-200 mt-2 z-20">{{ site['visit_num'] + ' 次访问' }}</div>
           </div>
         </template>
       </div>
@@ -67,13 +76,21 @@ onMounted(() => {
         <div class="grid grid-cols-2 gap-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-6">
           <div v-for="site in category?.sites">
             <div
-                class="group p-3 border-2 border-transparent hover:border-gray-100 rounded-md bg-transparent hover:bg-gray-50 no-underline cursor-pointer"
+                class="group relative p-3 border-2 border-transparent hover:border-gray-100 rounded-md bg-transparent hover:bg-gray-50 no-underline cursor-pointer"
                 @click="refreshTo(site)">
+              <!-- 网站 Logo -->
               <div
-                  class="font-bold text-gray-400 mb-1 group-hover:underline decoration-wavy decoration-gray-950 group-hover:text-gray-950">
+                  class="absolute top-1 right-2 w-9 h-9 flex justify-center items-center rounded-full overflow-hidden opacity-0 group-hover:opacity-100">
+                <img :src="site.logo ? site.logo : defaultLogoUrl" :alt="site.name">
+              </div>
+              <!-- 网站名称 -->
+              <div
+                  class="font-bold text-gray-400 mb-2 w-3/4 group-hover:underline decoration-wavy decoration-gray-950 group-hover:text-gray-950">
                 {{ site['name'] }}
               </div>
+              <!-- 网站描述 -->
               <div class="text-sm text-gray-400 truncate" :title="site['description']">{{ site['description'] }}</div>
+              <!-- 网站访问数 -->
               <div class="text-xs font-light text-gray-200 mt-2">{{ site['visit_num'] + ' 次访问' }}</div>
             </div>
           </div>
