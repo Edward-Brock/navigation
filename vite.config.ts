@@ -35,6 +35,15 @@ export default ({mode}) => defineConfig({
       '@': path.resolve(__dirname, './src'),
     },
   },
+  build: {
+    minify: 'terser',
+    terserOptions: {
+      compress: {
+        drop_console: true,
+        drop_debugger: true,
+      },
+    },
+  },
   server: {
     cors: true, // 默认启用并允许任何源
     open: true, // 在服务器启动时自动在浏览器中打开应用程序

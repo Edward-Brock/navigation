@@ -3,6 +3,9 @@ import { reactive, watch } from 'vue'
 import { getPassword } from '@/apis/login'
 import alarmSound from "../assets/alarm.wav";
 import router from '@/router'
+import { useLoginStore } from "@/stores/login";
+
+const auth = useLoginStore()
 
 let form = reactive({
   password: "",
@@ -37,6 +40,7 @@ function checkPassword() {
         })
         //   验证成功并跳转至 admin 页面
         router.push({name: 'admin'})
+        auth.setAuthenticated(true)
         break;
       case 404:
         ElMessage.error(response['message'])
@@ -74,6 +78,7 @@ function alarm() {
         <div class="mt-2">
           <input id="password" name="password" v-model="form.password" type="password" @keydown.enter="checkPassword()"
                  required
+                 autofocus
                  :minlength="4"
                  class="block text-center w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"/>
         </div>

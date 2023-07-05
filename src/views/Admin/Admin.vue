@@ -1,8 +1,7 @@
 <script setup lang="ts">
 import Header from '@/components/Home/Header.vue'
 import { ref } from 'vue'
-import Aside from '@/components/Admin/Aside.vue'
-import Main from '@/components/Admin/Main.vue'
+import Aside from '@/components/Admin/AdminAside.vue'
 
 // 顶部高度
 const headerHeight = ref(48)
@@ -18,7 +17,7 @@ const headerHeight = ref(48)
         <el-aside class="hidden-xs-only">
           <Aside/>
         </el-aside>
-        <el-main class="select-none">
+        <el-main>
           <router-view></router-view>
         </el-main>
       </el-container>
