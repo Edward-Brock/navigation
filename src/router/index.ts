@@ -20,6 +20,10 @@ const routes = [
       path: 'main',
       name: 'adminMain',
       component: () => import('@/components/Admin/Main.vue'),
+    }, {
+      path: 'categoryMain',
+      name: 'categoryMain',
+      component: () => import('@/components/Admin/category/Main.vue'),
     }],
   },
   {

@@ -6,7 +6,7 @@ let totalNum = ref([])
 
 function onTotalNum() {
   getTotalNum().then((response: object) => {
-    console.log(response)
+    // console.log(response)
     totalNum.value = response
   })
 }

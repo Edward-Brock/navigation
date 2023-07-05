@@ -18,7 +18,7 @@ const headerHeight = ref(48)
         <el-aside class="hidden-xs-only">
           <Aside/>
         </el-aside>
-        <el-main>
+        <el-main class="select-none">
           <router-view></router-view>
         </el-main>
       </el-container>

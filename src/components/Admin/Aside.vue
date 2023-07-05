@@ -1,13 +1,16 @@
 <script setup lang="ts">
+import router from '@/router'
+
 const asideMenu = [
-  {id: 1, name: '分类管理', url: ''},
+  {id: 1, name: '分类管理', url: 'categoryMain'},
   {id: 2, name: '添加分类', url: ''},
   {id: 3, name: '网站管理', url: ''},
   {id: 4, name: '添加网站', url: ''},
 ]
 
 function onJump(item) {
-  console.log(item)
+  // console.log(item)
+  router.push({name: item.url})
 }
 </script>
 
