@@ -7,8 +7,11 @@ export {}
 
 declare module 'vue' {
   export interface GlobalComponents {
+    AdminAside: typeof import('./src/components/Admin/AdminAside.vue')['default']
+    AdminMain: typeof import('./src/components/Admin/AdminMain.vue')['default']
     Aside: typeof import('./src/components/Home/Aside.vue')['default']
     Content: typeof import('./src/components/Home/Content.vue')['default']
+    ElAside: typeof import('element-plus/es')['ElAside']
     ElContainer: typeof import('element-plus/es')['ElContainer']
     ElFooter: typeof import('element-plus/es')['ElFooter']
     ElHeader: typeof import('element-plus/es')['ElHeader']
@@ -16,6 +19,7 @@ declare module 'vue' {
     ElScrollbar: typeof import('element-plus/es')['ElScrollbar']
     Footer: typeof import('./src/components/Home/Footer.vue')['default']
     Header: typeof import('./src/components/Home/Header.vue')['default']
+    Main: typeof import('./src/components/Admin/Main.vue')['default']
     RouterLink: typeof import('vue-router')['RouterLink']
     RouterView: typeof import('vue-router')['RouterView']
     Statistic: typeof import('./src/components/Home/Statistic.vue')['default']

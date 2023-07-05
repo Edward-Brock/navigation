@@ -14,7 +14,13 @@ const routes = [
   {
     path: '/admin',
     name: 'admin',
+    redirect: {name: "adminMain"},
     component: () => import('@/views/Admin/Admin.vue'),
+    children: [{
+      path: 'main',
+      name: 'adminMain',
+      component: () => import('@/components/Admin/Main.vue'),
+    }],
   },
   {
     path: '/:pathMatch(.*)*',
