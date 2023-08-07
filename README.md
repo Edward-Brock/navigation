@@ -22,7 +22,7 @@
 ### 项目安装
 
 ```shell
-npm install
+pnpm install
 ```
 
 ### 项目前端运行
@@ -30,7 +30,7 @@ npm install
 ```shell
 vite
 或
-npm run dev
+pnpm dev
 ```
 
 ## LICENSE

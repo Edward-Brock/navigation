@@ -15,10 +15,10 @@ const footerHeight = ref(100)
 <template>
   <div class="common-layout">
     <el-container>
-      <el-header :height="headerHeight + 'px'" class="bg-white sticky top-0 z-50">
+      <el-header :height="headerHeight + 'px'">
         <Header/>
       </el-header>
-      <el-main class="my-8">
+      <el-main class="mb-8">
         <template class="flex flex-row">
           <Aside class="hidden-xs-only"/>
           <Content/>

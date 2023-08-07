@@ -25,7 +25,7 @@ function goAnchor(selector: any) {
 </script>
 
 <template>
-  <div class="w-64 max-w-xs h-full px-4 sm:px-9 lg:px-8 select-none text-gray-400 sticky top-14">
+  <div class="w-64 max-w-xs h-full px-4 sm:px-9 lg:px-8 select-none text-gray-400 sticky top-0">
     <el-scrollbar class="w-48" height="calc(100vh - 80px)">
       <template v-for="(category,index) in categoryInfo">
         <div

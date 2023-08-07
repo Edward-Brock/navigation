@@ -4,6 +4,7 @@ import { getPassword } from '@/apis/login'
 import alarmSound from "../assets/alarm.wav";
 import router from '@/router'
 import { useLoginStore } from "@/stores/login";
+import {ElMessage} from "element-plus";
 
 const auth = useLoginStore()
 
@@ -38,13 +39,13 @@ function checkPassword() {
           message: '验证成功',
           type: 'success',
         })
-        //   验证成功并跳转至 admin 页面
+        // 验证成功并跳转至 admin 页面
         router.push({name: 'admin'})
         auth.setAuthenticated(true)
         break;
       case 404:
         ElMessage.error(response['message'])
-        //   验证失败并调用播放警示音
+        // 验证失败并调用播放警示音
         alarm()
         break;
     }
