@@ -33,6 +33,10 @@ vite
 pnpm dev
 ```
 
+## 效果展示
+
+![展示图](src/assets/display-demo-light.jpg)
+
 ## LICENSE
 
 [GNU General Public License v3.0](https://github.com/Edward-Brock/navigation/blob/main/LICENSE)
