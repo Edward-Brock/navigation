@@ -1,10 +1,10 @@
-import { defineConfig, loadEnv } from 'vite'
+import {defineConfig, loadEnv} from 'vite'
 import vue from '@vitejs/plugin-vue'
 import AutoImport from 'unplugin-auto-import/vite'
 import Components from 'unplugin-vue-components/vite'
-import { ElementPlusResolver } from 'unplugin-vue-components/resolvers'
+import {ElementPlusResolver} from 'unplugin-vue-components/resolvers'
 import * as path from 'path'
-import { createHtmlPlugin } from "vite-plugin-html"
+import {createHtmlPlugin} from "vite-plugin-html"
 
 // 这个配置为了在 HTML 中使用环境变量
 const getViteEnv = (mode, target) => {
@@ -26,6 +26,7 @@ export default ({mode}) => defineConfig({
         data: {
           // 将环境变量 VITE_APP_TITLE 赋值给 title 方便 HTML 页面使用 title 获取系统标题
           title: getViteEnv(mode, "VITE_APP_TITLE"),
+          injectScript: `<script type="module" src="src/assets/baidu_tongji_code.js"></script>`,
         },
       },
     }),

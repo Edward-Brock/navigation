@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import eventBus from '@/utils/eventBus.ts'
-import { onMounted, ref } from 'vue'
+import {onMounted, ref} from 'vue'
 
 let categoryInfo = ref()
 
@@ -25,23 +25,23 @@ function goAnchor(selector: any) {
 </script>
 
 <template>
-  <div class="w-64 max-w-xs h-full px-4 sm:px-9 lg:px-8 select-none text-gray-400 sticky top-0">
+  <aside class="w-64 max-w-xs h-full px-4 sm:px-9 lg:px-8 select-none text-gray-400 sticky top-0">
     <el-scrollbar class="w-48" height="calc(100vh - 80px)">
-      <template v-for="(category,index) in categoryInfo">
+      <template v-for="category in categoryInfo">
         <div
             class="my-3 p-3 pl-6 font-bold border-2 border-transparent hover:border-gray-300 rounded-full hover:text-gray-950"
-            @click="goAnchor('#tag' + index)">
+            @click="goAnchor(`#tag_${category.id}`)">
           {{ category.name }}
         </div>
-        <template v-for="(second_category,index) in category['second_category']">
+        <template v-for="second_category in category['second_category']">
           <div class="my-3 p-3 pl-9 border-2 border-transparent hover:border-gray-300 rounded-full hover:text-gray-950"
-               @click="goAnchor('#tag_second' + index)">
+               @click="goAnchor(`#tag_second_${second_category.id}`)">
             {{ second_category.name }}
           </div>
         </template>
       </template>
     </el-scrollbar>
-  </div>
+  </aside>
 </template>
 
 <style scoped lang="scss">
