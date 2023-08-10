@@ -42,7 +42,7 @@ function toSearch() {
     </div>
     <input type="text" name="search" id="search" required autofocus v-model="searchInfo.keyword"
            @keydown.enter="toSearch"
-           class="block w-full h-12 p-3 rounded-md border-b-1 px-3.5 py-2 pl-36 text-gray-900 shadow-sm placeholder:text-gray-400 focus:ring-1 focus:ring-inset focus:ring-gray-600"/>
+           class="block w-full h-12 p-3 rounded-md border-b-1 px-3.5 py-2 pl-36 pr-20 text-gray-900 shadow-sm placeholder:text-gray-400 focus:ring-1 focus:ring-inset focus:ring-gray-600"/>
     <div class="absolute inset-y-0 right-0 flex items-center">
       <button
           class="h-12 rounded-md px-6 py-2 text-sm font-bold text-gray-400 hover:text-gray-800 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-gray-600"
