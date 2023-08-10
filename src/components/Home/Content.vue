@@ -2,6 +2,7 @@
 import {getAllData, findOne} from '@/apis/home'
 import {onMounted, Ref, ref, UnwrapRef} from 'vue'
 import eventBus from '@/utils/eventBus'
+import Search from "@/components/Home/Search.vue";
 
 let categoryInfo: Ref<UnwrapRef<any[]>> = ref([])
 let defaultLogoUrl = import.meta.env.VITE_APP_LOGO_DEFAULT_URL
@@ -39,6 +40,7 @@ onMounted(() => {
 
 <template>
   <main class="w-full px-4 sm:px-9 lg:px-8 select-none">
+    <Search/>
     <template v-for="category in categoryInfo">
       <!-- 一级目录 -->
       <section :id="`tag_${category.id}`" class="my-6">
@@ -102,6 +104,7 @@ onMounted(() => {
         </div>
       </section>
     </template>
+    <el-backtop/>
   </main>
 </template>
 

@@ -13,6 +13,7 @@ declare module 'vue' {
     CategoryMain: typeof import('./src/components/Admin/category/CategoryMain.vue')['default']
     Content: typeof import('./src/components/Home/Content.vue')['default']
     ElAside: typeof import('element-plus/es')['ElAside']
+    ElBacktop: typeof import('element-plus/es')['ElBacktop']
     ElContainer: typeof import('element-plus/es')['ElContainer']
     ElFooter: typeof import('element-plus/es')['ElFooter']
     ElHeader: typeof import('element-plus/es')['ElHeader']
@@ -26,6 +27,7 @@ declare module 'vue' {
     Header: typeof import('./src/components/Home/Header.vue')['default']
     RouterLink: typeof import('vue-router')['RouterLink']
     RouterView: typeof import('vue-router')['RouterView']
+    Search: typeof import('./src/components/Home/Search.vue')['default']
     SiteMain: typeof import('./src/components/Admin/site/SiteMain.vue')['default']
     Statistic: typeof import('./src/components/Home/Statistic.vue')['default']
   }
