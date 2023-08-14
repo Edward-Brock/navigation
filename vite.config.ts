@@ -22,12 +22,47 @@ export default ({mode}) => defineConfig({
       resolvers: [ElementPlusResolver()],
     }),
     createHtmlPlugin({
+      minify: true,
       inject: {
         data: {
           // 将环境变量 VITE_APP_TITLE 赋值给 title 方便 HTML 页面使用 title 获取系统标题
           title: getViteEnv(mode, "VITE_APP_TITLE"),
           injectScript: `<script type="module" src="src/assets/baidu_tongji_code.js"></script>`,
         },
+        tags: [
+          {
+            injectTo: 'head',
+            tag: 'meta',
+            attrs: {
+              name: 'author',
+              content: getViteEnv(mode, "VITE_APP_META_AUTHOR"),
+            },
+          },
+          {
+            injectTo: 'head',
+            tag: 'meta',
+            attrs: {
+              name: 'copyright',
+              content: getViteEnv(mode, "VITE_APP_META_COPYRIGHT"),
+            },
+          },
+          {
+            injectTo: 'head',
+            tag: 'meta',
+            attrs: {
+              name: 'keywords',
+              content: getViteEnv(mode, "VITE_APP_META_KEYWORDS"),
+            },
+          },
+          {
+            injectTo: 'head',
+            tag: 'meta',
+            attrs: {
+              name: 'description',
+              content: getViteEnv(mode, "VITE_APP_META_DESCRIPTION"),
+            },
+          },
+        ],
       },
     }),
   ],
