@@ -56,19 +56,20 @@ onMounted(() => {
 
 <template>
   <div class="relative my-8">
-    <div class="absolute inset-y-0 left-0 flex items-center">
-      <label for="search" class="sr-only">Search Engineer</label>
-      <select id="Search" name="search-select" v-model="searchInfo.searchSelect" @change="searchSelectHandleChange"
-              class="h-12 rounded-md border-0 bg-transparent bg-none py-0 pl-4 pr-4 text-gray-400 focus:ring-1 focus:ring-inset focus:ring-gray-600 sm:text-sm">
-        <option v-for="item in searchSelectArray" :key="item.id" :value="item.id">{{ item.name }}</option>
-      </select>
+    <div class="flex flex-wrap flex-row items-center justify-start ml-1 search-group">
+      <div class="px-2.5 py-1.5 mr-2.5 overflow-hidden search-radio" v-for="item in searchSelectArray" :key="item.id">
+        <input class="w-1/4" type="radio" name="searchRadio"
+               :value="item.id" v-model="searchInfo.searchSelect"
+               @change="searchSelectHandleChange"/>
+        <label>{{ item.name }}</label>
+      </div>
     </div>
     <input type="text" name="search" id="search" required autofocus v-model="searchInfo.keyword"
            @keydown.enter="toSearch"
-           class="block w-full h-12 p-3 rounded-md border-b-1 px-3.5 py-2 pl-36 pr-20 text-gray-900 shadow-sm placeholder:text-gray-400 focus:ring-1 focus:ring-inset focus:ring-gray-600"/>
-    <div class="absolute inset-y-0 right-0 flex items-center">
+           class="block w-full h-12 p-3 rounded-md border-b-1 px-3.5 py-2 pr-20 text-gray-900 shadow-sm placeholder:text-gray-400 focus:ring-1 focus:ring-inset focus:ring-gray-600"/>
+    <div class="absolute right-0 bottom-0 flex items-center justify-center">
       <button
-          class="h-12 rounded-md px-6 py-2 text-sm font-bold text-gray-400 hover:text-gray-800 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-gray-600"
+          class="h-12 rounded-md px-6 text-sm font-bold text-gray-400 hover:text-gray-800 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-gray-600"
           @click="toSearch">
         搜索
       </button>
@@ -77,5 +78,29 @@ onMounted(() => {
 </template>
 
 <style scoped lang="scss">
+.search-radio input[type="radio"] {
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+  border: none;
+  height: 26px;
+  position: absolute;
+}
 
+.search-radio input[type="radio"] + label {
+  color: rgba(0, 0, 0, .5);
+  cursor: pointer;
+}
+
+.search-radio input[type="radio"]:checked + label {
+  font-weight: bold;
+  padding: 0.2em 1em;
+  color: rgba(0, 0, 0, .9);
+  cursor: pointer;
+}
+
+.search-radio input[type="radio"]:checked::before {
+  content: "⚡";
+  font-size: 16px;
+}
 </style>
