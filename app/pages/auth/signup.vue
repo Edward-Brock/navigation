@@ -11,6 +11,7 @@
       <UForm
         :schema="v.safeParser(schema)"
         :state="state"
+        :disabled="isLoggedIn"
         class="space-y-6"
         @submit="onSubmit"
       >
@@ -70,7 +71,6 @@
           type="submit"
           size="lg"
           :loading="isSubmitting"
-          :disabled="isLoggedIn"
           class="block w-full font-bold"
         >
           注册
