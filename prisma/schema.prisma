@@ -72,3 +72,12 @@ model Verification {
 
   @@map("verification")
 }
+
+model Option {
+  name        String  @unique
+  value       String? @db.Text
+  autoload    Boolean @default(false)
+  description String?
+
+  @@map("option")
+}

@@ -4,7 +4,7 @@ import { authClient } from '~/utils/auth-client'
 export default defineNuxtRouteMiddleware(async (to) => {
   const router = useRouter()
   const { data: session } = await authClient.useSession(useFetch)
-  const { data: signupData, error: signupError } = await useFetch('/api/check-signup-availability')
+  const { data: signupData, error: signupError } = await useFetch('/api/auth/check-signup-availability')
 
   // 需要登录的受保护页面（支持多个路径）
   const protectedRoutes = [/^\/dashboard/]
