@@ -9,7 +9,7 @@
                 v-if="logoUrl"
                 class="h-8 w-auto"
                 :src="logoUrl"
-                alt="Your Company"
+                :alt="projectTitle"
               >
               <USkeleton
                 v-else
@@ -48,6 +48,7 @@ const session = authClient.useSession()
 const { data: options } = await useFetch('/api/option')
 const colorMode = useColorMode()
 const logoUrl = ref('')
+const projectTitle = ref('')
 
 // 在组件加载时，确保使用系统颜色模式
 onMounted(() => {
@@ -62,6 +63,9 @@ onMounted(() => {
     colorMode.preference = 'light' // 设置为浅色模式
     logoUrl.value = options.value?.['logo_light_mode'] || ''
   }
+
+  // 获取 project_title 作为 alt 的值
+  projectTitle.value = options.value?.['project_title'] || 'Logo'
 
   // 监听系统颜色模式变化
   darkModeQuery.addEventListener('change', (e) => {

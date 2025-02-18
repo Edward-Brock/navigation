@@ -1,75 +1,39 @@
 # Navigation
 
-Look at [Nuxt docs](https://nuxt.com/docs/getting-started/introduction) and [Nuxt UI docs](https://ui3.nuxt.dev) to learn more.
+这是一个基于 Nuxt 4、Nuxt UI 3、Prisma 和 Better Auth 技术栈构建的个人导航站。
 
-## Setup
+旨在提供一个简单且高效的平台，让用户能够集中管理和访问常用的网站和应用。通过该站点，用户可以进行个性化设置（如主题切换、Logo 定制等）。
 
-Make sure to install the dependencies:
+## 安装
+
+要开始使用该项目，请克隆该仓库并安装所需的依赖：
 
 ```bash
-# npm
-npm install
-
 # pnpm
 pnpm install
-
-# yarn
-yarn install
-
-# bun
-bun install
 ```
 
-## Development Server
+## 开发环境配置
 
-Start the development server on `http://localhost:3000`:
+要启动本地开发服务器，可以运行以下命令：
 
 ```bash
-# npm
-npm run dev
-
-# pnpm
+# 启动开发服务器
 pnpm run dev
-
-# yarn
-yarn dev
-
-# bun
-bun run dev
 ```
 
-## Production
+开发服务器会默认启动在 3000 端口，你可以 [点击此处](http://localhost:3000) 在浏览器中查看应用运行情况。
 
-Build the application for production:
+## 生产环境配置
+
+要构建生产环境版本，可以运行：
 
 ```bash
-# npm
-npm run build
-
-# pnpm
+# 构建生产版本
 pnpm run build
 
-# yarn
-yarn build
-
-# bun
-bun run build
-```
-
-Locally preview production build:
-
-```bash
-# npm
-npm run preview
-
-# pnpm
+# 预览生产版本
 pnpm run preview
-
-# yarn
-yarn preview
-
-# bun
-bun run preview
 ```
 
-Check out the [deployment documentation](https://nuxt.com/docs/getting-started/deployment) for more information.
+此命令将构建应用并允许你在生产环境之前进行预览。
