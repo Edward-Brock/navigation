@@ -14,15 +14,17 @@ datasource db {
 }
 
 model User {
-  id            String    @id
-  name          String    @db.Text
+  id            String     @id
+  name          String     @db.Text
   email         String
   emailVerified Boolean
-  image         String?   @db.Text
+  image         String?    @db.Text
   createdAt     DateTime
   updatedAt     DateTime
   sessions      Session[]
   accounts      Account[]
+  categories    Category[]
+  websites      Website[]
 
   @@unique([email])
   @@map("user")
@@ -80,4 +82,40 @@ model Option {
   description String?
 
   @@map("option")
+}
+
+model Category {
+  id          String    @id @default(cuid(2))
+  userId      String
+  name        String
+  description String?
+  isActive    Boolean   @default(true)
+  sortOrder   Int?
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
+  deletedAt   DateTime?
+  user        User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+  websites    Website[]
+
+  @@map("category")
+}
+
+model Website {
+  id             String    @id @default(cuid(2))
+  categoryId     String
+  userId         String
+  url            String    @db.Text
+  title          String
+  description    String?
+  favicon        String?   @db.Text
+  isFavorite     Boolean   @default(false)
+  sortOrder      Int?
+  visitCount     Int       @default(0)
+  lastVisitedAt  DateTime?
+  lastModifiedAt DateTime?
+  createdAt      DateTime  @default(now())
+  updatedAt      DateTime  @updatedAt
+  deletedAt      DateTime?
+  user           User      @relation(fields: [userId], references: [id])
+  category       Category  @relation(fields: [categoryId], references: [id])
 }

@@ -1,4 +1,4 @@
-// server/api/check-signup-availability.get.ts
+// server/api/auth/check-signup-availability.get.ts
 import { defineEventHandler } from 'h3'
 import prisma from '~/utils/prisma'
 
