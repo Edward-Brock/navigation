@@ -1,40 +1,38 @@
 <template>
   <Disclosure>
-    <div class="mx-auto max-w-7xl px-2 sm:px-6 lg:px-8">
-      <div class="relative flex h-14 items-center justify-between">
-        <div class="flex flex-none sm:flex-1 items-center justify-center pl-2 sm:pl-0 sm:items-stretch sm:justify-start">
-          <nuxt-link to="/">
-            <div class="flex shrink-0 items-center">
-              <img
-                v-if="logoUrl"
-                class="h-8 w-auto"
-                :src="logoUrl"
-                :alt="projectTitle"
-              >
-              <USkeleton
-                v-else
-                class="h-6 w-24"
-              />
-            </div>
-          </nuxt-link>
-        </div>
-        <div class="absolute inset-y-0 right-0 flex items-center pr-2 sm:static sm:inset-auto sm:ml-6 sm:pr-0">
-          <template v-if="!session.data">
-            <UButton
-              class="rounded-full"
-              trailing-icon="i-lucide-arrow-right"
-              color="neutral"
-              variant="ghost"
-              size="lg"
-              to="/auth/login"
+    <div class="relative flex h-14 items-center justify-between">
+      <div class="flex flex-none sm:flex-1 items-center justify-center pl-3 sm:pl-0 sm:items-stretch sm:justify-start">
+        <nuxt-link to="/">
+          <div class="flex shrink-0 items-center">
+            <img
+              v-if="logoUrl"
+              class="h-8 w-auto"
+              :src="logoUrl"
+              :alt="projectTitle"
             >
-              登录
-            </UButton>
-          </template>
-          <template v-else>
-            <UserDropdown />
-          </template>
-        </div>
+            <USkeleton
+              v-else
+              class="h-6 w-24"
+            />
+          </div>
+        </nuxt-link>
+      </div>
+      <div class="absolute inset-y-0 right-0 flex items-center sm:static sm:inset-auto sm:ml-6">
+        <template v-if="!session.data">
+          <UButton
+            class="rounded-full"
+            trailing-icon="i-lucide-arrow-right"
+            color="neutral"
+            variant="ghost"
+            size="lg"
+            to="/auth/login"
+          >
+            登录
+          </UButton>
+        </template>
+        <template v-else>
+          <UserDropdown />
+        </template>
       </div>
     </div>
   </Disclosure>

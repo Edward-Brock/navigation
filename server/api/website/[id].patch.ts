@@ -12,6 +12,8 @@ const schema = v.object({
   favicon: v.pipe(v.optional(v.string())),
   isFavorite: v.pipe(v.optional(v.boolean())),
   sortOrder: v.pipe(v.optional(v.number())),
+  visitCount: v.pipe(v.optional(v.number())),
+  lastVisitedAt: v.pipe(v.optional(v.string())),
 })
 
 export default defineEventHandler(async (event) => {
