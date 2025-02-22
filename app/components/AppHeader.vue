@@ -1,5 +1,5 @@
 <template>
-  <Disclosure>
+  <UContainer>
     <div class="relative flex h-14 items-center justify-between">
       <div class="flex flex-none sm:flex-1 items-center justify-center pl-3 sm:pl-0 sm:items-stretch sm:justify-start">
         <nuxt-link to="/">
@@ -35,11 +35,10 @@
         </template>
       </div>
     </div>
-  </Disclosure>
+  </UContainer>
 </template>
 
 <script setup lang="ts">
-import { Disclosure } from '@headlessui/vue'
 import { authClient } from '~/utils/auth-client'
 
 const session = authClient.useSession()

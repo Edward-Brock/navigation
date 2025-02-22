@@ -1,9 +1,34 @@
 <template>
-  <div>
+  <div class="bg-gray-50 dark:bg-gray-800">
+    <!-- 分类导航栏（仅在数据加载成功后显示） -->
+    <nav
+      v-if="categories.length > 0"
+      class="sticky top-0 bg-white dark:bg-gray-900 z-50"
+    >
+      <UContainer>
+        <div class="py-2">
+          <UButton
+            v-for="category in categories"
+            :key="category.id"
+            color="neutral"
+            variant="link"
+            :class="{
+              'text-gray-700 dark:text-white font-bold': activeCategoryId === category.id, // 当前分类高亮样式
+              'text-gray-400 dark:text-gray-600': activeCategoryId !== category.id, // 默认样式
+            }"
+            class="cursor-pointer px-4 py-2 whitespace-nowrap transition-colors"
+            @click="scrollToCategory(category.id)"
+          >
+            {{ category.name }}
+          </UButton>
+        </div>
+      </UContainer>
+    </nav>
+
     <!-- 加载状态 -->
-    <section
+    <UContainer
       v-if="isLoading"
-      class="w-full py-10"
+      class="py-10"
     >
       <article
         v-for="i in 3"
@@ -11,7 +36,6 @@
         class="mb-6"
       >
         <header class="flex flex-col items-center sm:items-start">
-          <!-- 分类标题骨架 -->
           <USkeleton class="h-8 w-48 rounded" />
           <USkeleton class="h-6 w-64 rounded mt-2" />
         </header>
@@ -20,24 +44,20 @@
             v-for="j in 5"
             :key="j"
           >
-            <div class="flex flex-col p-3 bg-gray-100 rounded-md">
+            <div class="flex flex-col p-3 bg-gray-100 dark:bg-gray-700 rounded-md">
               <div class="flex pb-3">
-                <!-- 网站图标骨架 -->
                 <USkeleton class="h-10 w-10 rounded-full" />
                 <div class="ml-2">
-                  <!-- 网站标题骨架 -->
                   <USkeleton class="h-4 w-32 rounded" />
-                  <!-- 网站描述骨架 -->
                   <USkeleton class="h-3 w-48 rounded mt-2" />
                 </div>
               </div>
-              <!-- 访问数骨架 -->
               <USkeleton class="h-3 w-16 rounded" />
             </div>
           </li>
         </ul>
       </article>
-    </section>
+    </UContainer>
 
     <!-- 错误状态 -->
     <section
@@ -45,7 +65,6 @@
       class="text-lg font-semibold text-red-500 flex flex-col items-center gap-4 h-screen"
     >
       <p>Error: {{ error.message }}</p>
-      <!-- 添加重试按钮 -->
       <button
         class="px-4 py-2 bg-red-500 text-white rounded hover:bg-red-600"
         @click="loadCategories"
@@ -55,13 +74,14 @@
     </section>
 
     <!-- 分类及网站展示 -->
-    <section
+    <UContainer
       v-if="categories.length > 0"
-      class="w-full py-10"
+      class="py-10"
     >
       <article
         v-for="category in categories"
         :key="category.id"
+        :ref="(el) => setCategoryRef(category.id, el)"
         class="mb-6"
       >
         <!-- 分类标题 -->
@@ -128,7 +148,7 @@
           <p>No websites available in this category.</p>
         </section>
       </article>
-    </section>
+    </UContainer>
 
     <!-- 如果没有任何分类 -->
     <section
@@ -141,8 +161,9 @@
 </template>
 
 <script setup lang="ts">
-import { ref, onMounted } from 'vue'
+import { ref, onMounted, onUnmounted } from 'vue'
 
+// 定义接口
 interface Website {
   id: string
   categoryId: string
@@ -168,33 +189,57 @@ interface Category {
   websites: Website[]
 }
 
+// 响应式状态
 const isLoading = ref(true)
 const categories = ref<Category[]>([])
 const error = ref<Error | null>(null)
+const navHeight = ref(0)
+const activeCategoryId = ref<string | null>(null)
+const categoryRefs = ref<Record<string, HTMLElement>>({})
+
+// 设置分类区域的引用
+const setCategoryRef = (id: string, el: HTMLElement) => {
+  if (el) {
+    categoryRefs.value[id] = el
+  }
+}
+
+// 跳转到指定分类区域
+const scrollToCategory = (id: string) => {
+  const categoryElement = categoryRefs.value[id]
+  if (categoryElement) {
+    const elementPosition = categoryElement.getBoundingClientRect().top + window.scrollY
+    const offset = navHeight.value + 70 // 导航栏高度 + 额外偏移量
+    window.scrollTo({
+      top: elementPosition - offset, // 减去导航栏高度和额外偏移量
+      behavior: 'smooth',
+    })
+    activeCategoryId.value = id // 设置当前激活的分类
+  }
+}
+
+// 监听滚动事件，更新当前激活的分类
+const handleScroll = () => {
+  const navBottom = window.scrollY + navHeight.value // 导航栏底部位置
+
+  // 找到第一个超过导航栏底部的分类
+  let newActiveCategoryId: string | null = null
+  for (const [id, element] of Object.entries(categoryRefs.value)) {
+    const { top } = element.getBoundingClientRect()
+    const elementTop = top + window.scrollY // 转换为页面绝对位置
+
+    if (elementTop > navBottom) {
+      // 如果分类标题的顶部超过导航栏底部，则设置为当前激活的分类
+      newActiveCategoryId = id
+      break
+    }
+  }
+
+  // 更新当前激活的分类
+  activeCategoryId.value = newActiveCategoryId
+}
 
 // 获取分类数据
-onMounted(async () => {
-  try {
-    const response = await fetch('/api/category')
-    const { statusCode, data } = await response.json()
-
-    if (statusCode !== 200 || !Array.isArray(data)) {
-      throw new Error('Failed to load categories')
-    }
-
-    categories.value = data
-  }
-  catch (err: any) {
-    error.value = err
-    console.error('Failed to load categories:', err)
-  }
-  finally {
-    isLoading.value = false
-  }
-
-  loadCategories()
-})
-
 const loadCategories = async () => {
   isLoading.value = true
   error.value = null
@@ -222,7 +267,7 @@ const loadCategories = async () => {
 const handleWebsiteClick = async (event: MouseEvent, website: Website) => {
   // 如果是中键点击（button === 1），阻止默认行为
   if (event.button === 1) {
-    event.preventDefault() // 阻止中键点击的默认行为
+    event.preventDefault()
   }
   else {
     // 否则立即导航到目标 URL
@@ -262,6 +307,40 @@ const handleWebsiteClick = async (event: MouseEvent, website: Website) => {
     console.error('Failed to update visit count:', err)
   }
 }
+
+// 组件挂载时初始化
+onMounted(async () => {
+  try {
+    // 获取导航栏高度
+    const navElement = document.querySelector('nav')
+    if (navElement) {
+      navHeight.value = navElement.clientHeight
+
+      // 监听导航栏高度变化
+      const resizeObserver = new ResizeObserver((entries) => {
+        for (const entry of entries) {
+          navHeight.value = entry.contentRect.height
+        }
+      })
+      resizeObserver.observe(navElement)
+    }
+
+    // 监听滚动事件
+    window.addEventListener('scroll', handleScroll)
+
+    // 加载分类数据
+    await loadCategories()
+  }
+  catch (err: any) {
+    error.value = err
+    console.error('Failed to initialize:', err)
+  }
+})
+
+// 组件卸载时移除滚动监听
+onUnmounted(() => {
+  window.removeEventListener('scroll', handleScroll)
+})
 </script>
 
 <style scoped>

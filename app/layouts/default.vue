@@ -1,5 +1,5 @@
 <template>
-  <UContainer class="select-none">
+  <div class="select-none">
     <header>
       <AppHeader />
     </header>
@@ -7,7 +7,7 @@
     <main>
       <nuxt-page />
     </main>
-  </UContainer>
+  </div>
 </template>
 
 <script setup lang="ts">
