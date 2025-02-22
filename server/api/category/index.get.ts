@@ -25,7 +25,7 @@ export default defineEventHandler(async () => {
         deletedAt: null,
       },
       orderBy: [{
-        sortOrder: 'desc',
+        sortOrder: 'asc',
       }, {
         createdAt: 'asc',
       }],
