@@ -6,7 +6,7 @@
       class="sticky top-0 bg-white dark:bg-gray-900 z-50"
     >
       <UContainer>
-        <div class="py-2">
+        <div class="h-14 flex items-center overflow-x-auto scrollbar-hide">
           <UButton
             v-for="category in categories"
             :key="category.id"
@@ -16,7 +16,7 @@
               'text-gray-700 dark:text-white font-bold': activeCategoryId === category.id, // 当前分类高亮样式
               'text-gray-400 dark:text-gray-600': activeCategoryId !== category.id, // 默认样式
             }"
-            class="cursor-pointer px-4 py-2 whitespace-nowrap transition-colors"
+            class="cursor-pointer p-4 whitespace-nowrap transition-colors"
             @click="scrollToCategory(category.id)"
           >
             {{ category.name }}
@@ -48,8 +48,8 @@
               <div class="flex pb-3">
                 <USkeleton class="h-10 w-10 rounded-full" />
                 <div class="ml-2">
-                  <USkeleton class="h-4 w-32 rounded" />
-                  <USkeleton class="h-3 w-48 rounded mt-2" />
+                  <USkeleton class="h-4 w-24 rounded" />
+                  <USkeleton class="h-3 w-32 rounded mt-2" />
                 </div>
               </div>
               <USkeleton class="h-3 w-16 rounded" />
@@ -143,7 +143,7 @@
         <!-- 如果网站不存在显示内容 -->
         <section
           v-else
-          class="flex justify-center sm:justify-start text-sm text-gray-400 mt-2"
+          class="flex justify-center sm:justify-start text-sm text-gray-400 mt-4"
         >
           <p>No websites available in this category.</p>
         </section>
@@ -151,12 +151,12 @@
     </UContainer>
 
     <!-- 如果没有任何分类 -->
-    <section
+    <UContainer
       v-else
-      class="text-lg font-semibold text-gray-500"
+      class="flex items-center justify-center h-dvh text-lg font-semibold text-gray-500"
     >
       <p>No categories or websites found.</p>
-    </section>
+    </UContainer>
   </div>
 </template>
 
