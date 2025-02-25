@@ -17,15 +17,6 @@ const schema = v.object({
 })
 
 export default defineEventHandler(async (event) => {
-  const session = await auth.api.getSession({
-    headers: event.headers,
-  })
-
-  if (!session || !session.user) {
-    throw createError({ statusCode: 401, message: 'User not authenticated' })
-  }
-
-  const userId = session.user.id
   const { id } = event.context.params as { id: string }
   const result = v.safeParse(schema, await readBody(event))
 
@@ -42,8 +33,8 @@ export default defineEventHandler(async (event) => {
       where: { id },
     })
 
-    // 确保网站存在且属于该用户
-    if (!website || website.userId !== userId) {
+    // 确保网站存在
+    if (!website) {
       throw createError({ statusCode: 404, message: 'Website not found' })
     }
 
@@ -52,7 +43,29 @@ export default defineEventHandler(async (event) => {
       Object.entries(result.output).filter(([, value]) => value !== undefined),
     )
 
-    // 更新分类
+    // 检查是否仅更新访问数和最后一次访问时间
+    const onlyUpdateVisitCountAndLastVisitedAt = Object.keys(updateData).every(key =>
+      key === 'visitCount' || key === 'lastVisitedAt',
+    )
+
+    if (!onlyUpdateVisitCountAndLastVisitedAt) {
+      const session = await auth.api.getSession({
+        headers: event.headers,
+      })
+
+      if (!session || !session.user) {
+        throw createError({ statusCode: 401, message: 'User not authenticated' })
+      }
+
+      const userId = session.user.id
+
+      // 确保网站属于该用户
+      if (website.userId !== userId) {
+        throw createError({ statusCode: 404, message: 'Website not found' })
+      }
+    }
+
+    // 更新网站
     const updatedWebsite = await prisma.website.update({
       where: { id },
       data: updateData,

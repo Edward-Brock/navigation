@@ -264,18 +264,9 @@ const loadCategories = async () => {
 }
 
 // 处理网站点击事件
-const handleWebsiteClick = async (event: MouseEvent, website: Website) => {
-  // 如果是中键点击（button === 1），阻止默认行为
-  if (event.button === 1) {
-    event.preventDefault()
-  }
-  else {
-    // 否则立即导航到目标 URL
-    window.location.href = website.url
-  }
-
-  // 异步发送更新请求（不阻塞跳转）
+const handleWebsiteClick = async (event: Event, website: Website) => {
   try {
+    // 发送更新访问数的请求
     const response = await fetch(`/api/website/${website.id}`, {
       method: 'PATCH',
       headers: {
