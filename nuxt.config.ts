@@ -3,6 +3,17 @@ export default defineNuxtConfig({
   modules: [
     '@nuxt/ui',
     '@nuxt/eslint',
+    [
+      '@pinia/nuxt',
+      {
+        autoImports: [
+          // 自动引入 `defineStore()`
+          'defineStore',
+          // 自动引入 `defineStore()` 并重命名为 `definePiniaStore()`
+          ['defineStore', 'definePiniaStore'],
+        ],
+      },
+    ],
   ],
   devtools: { enabled: true },
   css: ['~/assets/css/main.css'],
