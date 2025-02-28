@@ -8,7 +8,7 @@
               v-if="logoUrl"
               class="h-8 w-auto"
               :src="logoUrl"
-              :alt="projectTitle"
+              :alt="optionStore.projectTitle"
             >
             <USkeleton
               v-else
@@ -39,38 +39,61 @@
 </template>
 
 <script setup lang="ts">
+import { ref, onMounted, watch, onUnmounted } from 'vue'
 import { authClient } from '~/utils/auth-client'
+import { useOptionStore } from '@/stores/optionStore'
 
 const session = authClient.useSession()
-const { data: options } = await useFetch('/api/option')
+const optionStore = useOptionStore()
 const colorMode = useColorMode()
 const logoUrl = ref('')
-const projectTitle = ref('')
 
-// 在组件加载时，确保使用系统颜色模式
+// 获取 logo 地址的函数
+const getLogoUrl = () => {
+  return colorMode.value === 'dark'
+    ? optionStore.logoDarkMode
+    : optionStore.logoLightMode
+}
+
 onMounted(() => {
   const darkModeQuery = window.matchMedia('(prefers-color-scheme: dark)')
 
-  // 如果页面第一次加载时用户是深色模式，确保 logo 正确加载
-  if (darkModeQuery.matches) {
-    colorMode.preference = 'dark' // 设置为深色模式
-    logoUrl.value = options.value?.['logo_dark_mode'] || ''
+  // 处理系统颜色模式变化的函数
+  const handleSystemColorChange = (e: MediaQueryListEvent) => {
+    colorMode.preference = e.matches ? 'dark' : 'light'
+    logoUrl.value = getLogoUrl()
   }
-  else {
-    colorMode.preference = 'light' // 设置为浅色模式
-    logoUrl.value = options.value?.['logo_light_mode'] || ''
-  }
-
-  // 获取 project_title 作为 alt 的值
-  projectTitle.value = options.value?.['project_title'] || 'Logo'
 
   // 监听系统颜色模式变化
-  darkModeQuery.addEventListener('change', (e) => {
-    colorMode.preference = e.matches ? 'dark' : 'light'
-    logoUrl.value = e.matches
-      ? options.value?.['logo_dark_mode'] || ''
-      : options.value?.['logo_light_mode'] || ''
+  darkModeQuery.addEventListener('change', handleSystemColorChange)
+
+  // 组件卸载时移除监听
+  onUnmounted(() => {
+    darkModeQuery.removeEventListener('change', handleSystemColorChange)
   })
+
+  // 加载配置数据
+  const loadOptions = async () => {
+    await optionStore.loadOptions()
+
+    // 根据系统颜色模式设置初始主题
+    if (darkModeQuery.matches) {
+      colorMode.preference = 'dark'
+    }
+    else {
+      colorMode.preference = 'light'
+    }
+
+    // 设置初始 logo 地址
+    logoUrl.value = getLogoUrl()
+  }
+
+  loadOptions()
+})
+
+// 监听主题模式变化
+watch(colorMode, () => {
+  logoUrl.value = getLogoUrl()
 })
 </script>
 

@@ -61,7 +61,7 @@
 
     <!-- 错误状态 -->
     <section
-      v-if="categoryStore.error"
+      v-if="!categoryStore.isLoading && categoryStore.error"
       class="text-lg font-semibold text-red-500 flex flex-col items-center gap-4 h-screen"
     >
       <p>Error: {{ categoryStore.error.message }}</p>
@@ -75,7 +75,7 @@
 
     <!-- 分类及网站展示 -->
     <UContainer
-      v-if="categoryStore.categories.length > 0"
+      v-if="!categoryStore.isLoading &&!categoryStore.error && categoryStore.categories.length > 0"
       class="py-10"
     >
       <article
@@ -152,7 +152,7 @@
 
     <!-- 如果没有任何分类 -->
     <UContainer
-      v-else
+      v-if="!categoryStore.isLoading &&!categoryStore.error && categoryStore.categories.length === 0"
       class="flex items-center justify-center h-dvh text-lg font-semibold text-gray-500"
     >
       <p>No categories or websites found.</p>
@@ -161,6 +161,7 @@
 </template>
 
 <script setup lang="ts">
+import { onMounted, onUnmounted } from 'vue'
 import { useCategoryStore } from '@/stores/categoryStore'
 
 const categoryStore = useCategoryStore()
