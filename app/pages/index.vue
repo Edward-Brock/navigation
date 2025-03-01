@@ -8,13 +8,13 @@
       <UContainer>
         <div class="h-14 flex items-center overflow-x-auto scrollbar-hide">
           <UButton
-            v-for="category in categoryStore.categories"
+            v-for="category in filteredCategories"
             :key="category.id"
             color="neutral"
             variant="link"
             :class="{
               'text-gray-700 dark:text-white font-bold': categoryStore.activeCategoryId === category.id, // 当前分类高亮样式
-              'text-gray-400 dark:text-gray-600': categoryStore.activeCategoryId !== category.id, // 默认样式
+              'text-gray-400 dark:text-gray-600': categoryStore.activeCategoryId!== category.id, // 默认样式
             }"
             class="cursor-pointer p-4 whitespace-nowrap transition-colors"
             @click="categoryStore.scrollToCategory(category.id)"
@@ -75,11 +75,38 @@
 
     <!-- 分类及网站展示 -->
     <UContainer
-      v-if="!categoryStore.isLoading &&!categoryStore.error && categoryStore.categories.length > 0"
+      v-if="!categoryStore.isLoading &&!categoryStore.error"
       class="py-10"
     >
+      <!-- 搜索输入框 -->
+      <div class="mb-10">
+        <UInput
+          v-model="searchTerm"
+          icon="i-lucide-search"
+          size="xl"
+          variant="outline"
+          placeholder="Search categories and websites"
+          :ui="{ trailing: 'pe-1' }"
+          class="w-full"
+        >
+          <template
+            v-if="searchTerm?.length"
+            #trailing
+          >
+            <UButton
+              color="neutral"
+              variant="link"
+              size="sm"
+              icon="i-lucide-circle-x"
+              aria-label="Clear input"
+              @click="searchTerm = ''"
+            />
+          </template>
+        </UInput>
+      </div>
+
       <article
-        v-for="category in categoryStore.categories"
+        v-for="category in filteredCategories"
         :key="category.id"
         :ref="(el) => categoryStore.setCategoryRef(category.id, el)"
         class="mb-6"
@@ -101,7 +128,7 @@
         <section v-if="category.websites && category.websites.length > 0">
           <ul class="mt-4 grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4">
             <li
-              v-for="website in category.websites"
+              v-for="website in filteredWebsites(category.websites)"
               :key="website.id"
             >
               <ULink
@@ -152,7 +179,7 @@
 
     <!-- 如果没有任何分类 -->
     <UContainer
-      v-if="!categoryStore.isLoading &&!categoryStore.error && categoryStore.categories.length === 0"
+      v-if="!categoryStore.isLoading &&!categoryStore.error && filteredCategories.length === 0"
       class="flex items-center justify-center h-dvh text-lg font-semibold text-gray-500"
     >
       <p>No categories or websites found.</p>
@@ -161,10 +188,51 @@
 </template>
 
 <script setup lang="ts">
-import { onMounted, onUnmounted } from 'vue'
+import { onMounted, onUnmounted, ref, computed } from 'vue'
 import { useCategoryStore } from '@/stores/categoryStore'
 
+// 定义网站对象的接口
+interface Website {
+  id: number
+  title: string
+  description?: string
+  url: string
+  favicon: string
+  visitCount: number
+}
+
 const categoryStore = useCategoryStore()
+const searchTerm = ref('')
+
+// 计算过滤后的分类
+const filteredCategories = computed(() => {
+  if (searchTerm.value === '') {
+    return categoryStore.categories
+  }
+  return categoryStore.categories.filter((category) => {
+    // 检查分类名称或描述是否包含搜索词
+    const categoryMatch = category.name.toLowerCase().includes(searchTerm.value.toLowerCase())
+      || (category.description && category.description.toLowerCase().includes(searchTerm.value.toLowerCase()))
+    // 检查分类下是否有匹配的网站
+    const websiteMatch = category.websites && category.websites.some((website: Website) => {
+      return (website.title && website.title.toLowerCase().includes(searchTerm.value.toLowerCase()))
+        || (website.description && website.description.toLowerCase().includes(searchTerm.value.toLowerCase()))
+    })
+    return categoryMatch || websiteMatch
+  })
+})
+
+// 计算过滤后的网站
+const filteredWebsites = (websites: Website[]) => {
+  if (searchTerm.value === '') {
+    return websites
+  }
+  return websites.filter((website: Website) => {
+    // 确保 website.title 存在，避免空指针错误
+    return (website.title && website.title.toLowerCase().includes(searchTerm.value.toLowerCase()))
+      || (website.description && website.description.toLowerCase().includes(searchTerm.value.toLowerCase()))
+  })
+}
 
 // 组件挂载时初始化
 onMounted(async () => {
