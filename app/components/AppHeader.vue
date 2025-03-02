@@ -1,7 +1,7 @@
 <template>
   <UContainer>
     <div class="relative flex h-14 items-center justify-between">
-      <div class="flex flex-none sm:flex-1 items-center justify-center pl-3 sm:pl-0 sm:items-stretch sm:justify-start">
+      <div class="flex flex-none sm:flex-1 items-center justify-center sm:pl-0 sm:items-stretch sm:justify-start">
         <nuxt-link to="/">
           <div class="flex shrink-0 items-center">
             <img

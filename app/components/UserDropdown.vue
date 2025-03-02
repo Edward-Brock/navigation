@@ -28,6 +28,11 @@ const session = authClient.useSession()
 const items = ref([
   [
     {
+      label: '仪表盘',
+      icon: 'i-lucide-gauge',
+      to: '/dashboard',
+    },
+    {
       label: '个人信息',
       icon: 'i-lucide-user',
     },
