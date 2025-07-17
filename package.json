@@ -1,0 +1,34 @@
+{
+  "name": "navigation",
+  "private": true,
+  "author": "Edward Brock",
+  "type": "module",
+  "scripts": {
+    "build": "nuxt build",
+    "dev": "nuxt dev --host",
+    "generate": "nuxt generate",
+    "preview": "nuxt preview",
+    "postinstall": "nuxt prepare",
+    "lint": "eslint .",
+    "lint:fix": "eslint --fix ."
+  },
+  "dependencies": {
+    "@headlessui/vue": "^1.7.23",
+    "@heroicons/vue": "^2.2.0",
+    "@iconify-json/lucide": "^1.2.32",
+    "@iconify-json/simple-icons": "^1.2.29",
+    "@nuxt/ui": "3.0.0",
+    "@pinia/nuxt": "^0.10.1",
+    "@prisma/client": "^6.5.0",
+    "better-auth": "^1.2.4",
+    "nuxt": "^3.16.1",
+    "pinia": "^3.0.1",
+    "valibot": "1.0.0-rc.0"
+  },
+  "devDependencies": {
+    "@nuxt/eslint": "^1.2.0",
+    "eslint": "^9.22.0",
+    "prisma": "^6.5.0",
+    "typescript": "^5.8.2"
+  }
+}
