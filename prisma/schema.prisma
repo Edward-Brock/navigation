@@ -25,7 +25,11 @@ model User {
   sessions      Session[]
   accounts      Account[]
 
+  username        String?
+  displayUsername String? @db.Text
+
   @@unique([email])
+  @@unique([username])
   @@map("user")
 }
 

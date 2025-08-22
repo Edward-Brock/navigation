@@ -19,15 +19,15 @@
           @submit="onSubmit"
         >
           <UFormField
-            label="电子邮箱"
-            name="email"
+            label="用户名"
+            name="username"
             required
           >
             <UInput
-              v-model="state.email"
-              type="email"
-              autocomplete="email"
-              placeholder="输入电子邮箱"
+              v-model="state.username"
+              type="text"
+              autocomplete="username"
+              placeholder="输入用户名"
               icon="i-lucide-at-sign"
               class="w-full"
             />
@@ -48,17 +48,11 @@
             />
           </UFormField>
 
-          <UCheckbox
-            v-model="state.rememberMe"
-            color="neutral"
-            label="在此设备上记住我"
-            name="rememberMe"
-          />
-
           <UButton
+            block
             type="submit"
             :loading="isLoggedIn"
-            class="block w-full"
+            class="w-full cursor-pointer"
           >
             登录
           </UButton>
@@ -88,18 +82,20 @@ definePageMeta({
   hideUserMenu: true, // 隐藏 Header 内的用户信息区域
 })
 
+useHead({
+  title: '登录',
+})
+
 const schema = v.object({
-  email: v.pipe(v.string(), v.trim(), v.email('请输入电子邮箱')),
+  username: v.pipe(v.string(), v.trim(), v.minLength(3, '至少包含 3 个字符'), v.maxLength(30, '最多不超过 30 个字符')),
   password: v.pipe(v.string(), v.trim(), v.minLength(8, '必须至少包含 8 个字符'), v.maxLength(32, '最多不超过 32 个字符')),
-  rememberMe: v.pipe(v.boolean()),
 })
 
 type Schema = v.InferOutput<typeof schema>
 
 const state = reactive({
-  email: '',
+  username: '',
   password: '',
-  rememberMe: true,
 })
 
 /**
@@ -114,10 +110,9 @@ const router = useRouter()
 
 async function onSubmit(event: FormSubmitEvent<Schema>) {
   isLoggedIn.value = true
-  await authClient.signIn.email({
-    email: event.data.email,
+  await authClient.signIn.username({
+    username: event.data.username,
     password: event.data.password,
-    rememberMe: event.data.rememberMe,
   }, {
     onSuccess: () => {
       toast.add({

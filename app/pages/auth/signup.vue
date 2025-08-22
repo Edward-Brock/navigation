@@ -22,8 +22,6 @@
             label="昵称"
             name="name"
             required
-            size="lg"
-            class="block text-sm/6 font-medium text-gray-900"
           >
             <UInput
               v-model="state.name"
@@ -31,7 +29,24 @@
               autocomplete="name"
               placeholder="输入昵称"
               icon="i-lucide-user-round"
-              class="block w-full text-base text-gray-900 placeholder:text-gray-400 focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm/6"
+              class="w-full"
+            />
+          </UFormField>
+
+          <UFormField
+            label="用户名"
+            name="username"
+            :error="usernameAvailableError"
+            required
+          >
+            <UInput
+              v-model="state.username"
+              type="text"
+              autocomplete="username"
+              placeholder="输入用户名"
+              icon="i-lucide-at-sign"
+              class="w-full"
+              @blur="checkUsernameAvailable"
             />
           </UFormField>
 
@@ -40,7 +55,6 @@
             name="email"
             required
             size="lg"
-            class="block text-sm/6"
           >
             <UInput
               v-model="state.email"
@@ -68,9 +82,11 @@
           </UFormField>
 
           <UButton
+            block
             type="submit"
             :loading="isSignedUp"
-            class="block w-full"
+            :disabled="isSubmitDisabled"
+            class="w-full cursor-pointer"
           >
             注册
           </UButton>
@@ -100,18 +116,24 @@ definePageMeta({
   hideUserMenu: true, // 隐藏 Header 内的用户信息区域
 })
 
+useHead({
+  title: '注册',
+})
+
 const schema = v.object({
   email: v.pipe(v.string(), v.trim(), v.email('请输入电子邮箱')),
-  password: v.pipe(v.string(), v.trim(), v.minLength(8, '必须至少包含 8 个字符'), v.maxLength(32, '最多不超过 32 个字符')),
   name: v.pipe(v.string(), v.trim(), v.minLength(1, '昵称不能为空')),
+  password: v.pipe(v.string(), v.trim(), v.minLength(8, '至少包含 8 个字符'), v.maxLength(32, '最多不超过 32 个字符')),
+  username: v.pipe(v.string(), v.trim(), v.minLength(3, '至少包含 3 个字符'), v.maxLength(30, '最多不超过 30 个字符')),
 })
 
 type Schema = v.InferOutput<typeof schema>
 
 const state = reactive({
   email: '',
-  password: '',
   name: '',
+  password: '',
+  username: '',
 })
 
 /**
@@ -121,14 +143,35 @@ const state = reactive({
  */
 const isSignedUp = ref(false)
 
+// 用户名不可用时错误提示
+const usernameAvailableError = ref<string | null>(null)
+// 用户名不可用时将提交按钮禁用
+const isSubmitDisabled = computed(() => !!usernameAvailableError.value)
+
+// 检查用户名是否可用
+async function checkUsernameAvailable() {
+  const value = state.username.trim()
+  if (!value) {
+    usernameAvailableError.value = null
+    return
+  }
+
+  const response = await authClient.isUsernameAvailable({
+    username: value,
+  })
+
+  usernameAvailableError.value = response.data?.available ? null : '用户名已被占用'
+}
+
 const toast = useToast()
 const router = useRouter()
 async function onSubmit(event: FormSubmitEvent<Schema>) {
   isSignedUp.value = true
   await authClient.signUp.email({
     email: event.data.email,
-    password: event.data.password,
     name: event.data.name,
+    password: event.data.password,
+    username: event.data.username,
   }, {
     onSuccess: () => {
       toast.add({

@@ -14,7 +14,12 @@
     </NuxtLink>
     <!-- 功能区 -->
     <div v-if="!hideUserArea">
-      <template v-if="!session.data">
+      <!-- 未完成加载状态 -->
+      <template v-if="session.isPending">
+        <USkeleton class="w-20 h-9 rounded-full" />
+      </template>
+      <!-- 不存在登录信息显示登录按钮 -->
+      <template v-else-if="!session.data">
         <UButton
           class="rounded-full"
           trailing-icon="i-lucide-arrow-right"
@@ -26,6 +31,7 @@
           登录
         </UButton>
       </template>
+      <!-- 显示用户下拉选项 -->
       <template v-else>
         <UserDropdown />
       </template>
