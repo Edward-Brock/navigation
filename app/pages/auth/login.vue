@@ -5,12 +5,12 @@
   >
     <div class="h-full flex flex-col items-center justify-center">
       <div class="sm:mx-auto sm:w-full sm:max-w-sm">
-        <h2 class="mt-10 text-2xl/9 font-bold tracking-tight text-gray-900">
+        <h2 class="text-center text-2xl/9 font-bold">
           登录你的账户
         </h2>
       </div>
 
-      <div class="mt-10 sm:mx-auto sm:w-full sm:max-w-sm">
+      <div class="mt-10 w-full sm:mx-auto sm:w-full sm:max-w-sm">
         <UForm
           :schema="schema"
           :state="state"
@@ -64,7 +64,7 @@
           </UButton>
         </UForm>
 
-        <div class="mt-10 text-sm/6 text-gray-500">
+        <div class="mt-10 text-center text-sm/6 text-gray-500">
           还没有账号？
           <UButton
             trailing-icon="i-lucide-arrow-right"
@@ -132,7 +132,7 @@ async function onSubmit(event: FormSubmitEvent<Schema>) {
       toast.add({
         icon: 'i-heroicons-x-circle',
         title: '登录失败',
-        description: ctx.error.statusText,
+        description: ctx.error.message,
         color: 'error',
       })
     },
