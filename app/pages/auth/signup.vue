@@ -144,7 +144,7 @@ const state = reactive({
 const isSignedUp = ref(false)
 
 // 用户名不可用时错误提示
-const usernameAvailableError = ref<string | null>(null)
+const usernameAvailableError = ref<string | undefined>(undefined)
 // 用户名不可用时将提交按钮禁用
 const isSubmitDisabled = computed(() => !!usernameAvailableError.value)
 
@@ -152,7 +152,7 @@ const isSubmitDisabled = computed(() => !!usernameAvailableError.value)
 async function checkUsernameAvailable() {
   const value = state.username.trim()
   if (!value) {
-    usernameAvailableError.value = null
+    usernameAvailableError.value = undefined
     return
   }
 
@@ -160,7 +160,7 @@ async function checkUsernameAvailable() {
     username: value,
   })
 
-  usernameAvailableError.value = response.data?.available ? null : '用户名已被占用'
+  usernameAvailableError.value = response.data?.available ? undefined : '用户名已被占用'
 }
 
 const toast = useToast()
