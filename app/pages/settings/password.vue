@@ -1,5 +1,5 @@
 <template>
-  <div class="my-5">
+  <div class="py-6">
     <UForm
       :schema="schema"
       :state="state"

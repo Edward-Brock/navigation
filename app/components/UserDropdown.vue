@@ -26,6 +26,7 @@ const items = ref([
     {
       label: '仪表盘',
       icon: 'i-lucide-gauge',
+      to: '/dashboard',
     },
     {
       label: '设置',

@@ -1,26 +1,19 @@
 <template>
   <UContainer>
-    <div class="my-3 w-full flex items-center">
-      <UIcon
-        name="i-lucide-cog"
-        class="size-9 mr-1"
-      />
-      <div class="font-bold text-2xl">
+    <div class="flex items-center mx-auto max-w-7xl py-6">
+      <h1 class="text-3xl font-bold tracking-tight">
         设置
-      </div>
+      </h1>
     </div>
 
-    <!-- 设置内容区 -->
-    <div>
-      <!-- 设置表单 -->
-      <UNavigationMenu
-        :items="items"
-        class="w-full"
-      />
+    <!-- 设置表单 -->
+    <UNavigationMenu
+      :items="items"
+      class="w-full"
+    />
 
-      <!-- 嵌套页面 -->
-      <NuxtPage />
-    </div>
+    <!-- 嵌套页面 -->
+    <NuxtPage />
   </UContainer>
 </template>
 

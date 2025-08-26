@@ -15,18 +15,19 @@ datasource db {
 }
 
 model User {
-  id            String    @id
-  name          String    @db.Text
-  email         String
-  emailVerified Boolean
-  image         String?   @db.Text
-  createdAt     DateTime
-  updatedAt     DateTime
-  sessions      Session[]
-  accounts      Account[]
-
+  id              String     @id
+  name            String     @db.Text
+  email           String
+  emailVerified   Boolean
+  image           String?    @db.Text
+  createdAt       DateTime
+  updatedAt       DateTime
+  sessions        Session[]
+  accounts        Account[]
+  category        Category[]
+  website         Website[]
   username        String?
-  displayUsername String? @db.Text
+  displayUsername String?    @db.Text
 
   @@unique([email])
   @@unique([username])
@@ -76,4 +77,64 @@ model Verification {
   updatedAt  DateTime?
 
   @@map("verification")
+}
+
+model Category {
+  id          String     @id @default(cuid(2))
+  userId      String
+  name        String
+  description String?
+  icon        String?    @db.Text
+  isActive    Boolean    @default(true)
+  sortOrder   Int?
+  parentId    String?
+  parent      Category?  @relation("CategoryHierarchy", fields: [parentId], references: [id])
+  children    Category[] @relation("CategoryHierarchy")
+  createdAt   DateTime   @default(now())
+  updatedAt   DateTime   @updatedAt
+  deletedAt   DateTime?
+  user        User       @relation(fields: [userId], references: [id], onDelete: Cascade)
+  Website     Website[]
+
+  @@map("category")
+}
+
+model Website {
+  id             String       @id @default(cuid(2))
+  userId         String
+  categoryId     String
+  name           String
+  url            String       @db.Text
+  description    String?
+  favicon        String?      @db.Text
+  isActive       Boolean      @default(true)
+  isPinned       Boolean      @default(false)
+  sortOrder      Int?
+  clickCount     Int          @default(0)
+  lastVisitedAt  DateTime?
+  lastModifiedAt DateTime?
+  createdAt      DateTime     @default(now())
+  updatedAt      DateTime     @updatedAt
+  deletedAt      DateTime?
+  user           User         @relation(fields: [userId], references: [id], onDelete: Cascade)
+  category       Category     @relation(fields: [categoryId], references: [id], onDelete: Cascade)
+  tags           WebsiteTag[]
+}
+
+model Tag {
+  id          String       @id @default(cuid())
+  name        String       @unique
+  description String?
+  createdAt   DateTime     @default(now())
+  updatedAt   DateTime     @updatedAt
+  websites    WebsiteTag[]
+}
+
+model WebsiteTag {
+  websiteId String
+  tagId     String
+  website   Website @relation(fields: [websiteId], references: [id], onDelete: Cascade)
+  tag       Tag     @relation(fields: [tagId], references: [id], onDelete: Cascade)
+
+  @@id([websiteId, tagId])
 }
